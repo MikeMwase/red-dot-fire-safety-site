@@ -1,5 +1,16 @@
 // Red Dot Fire Safety Experts — shared behaviour
 document.addEventListener('DOMContentLoaded', function () {
+  // Small interactions that keep the static site feeling active.
+  document.body.classList.add('js-ready');
+  var header = document.querySelector('header');
+  if (header) {
+    var onScroll = function () {
+      header.classList.toggle('scrolled', window.scrollY > 18);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
   var panel = document.getElementById('mobilePanel');
   var toggle = document.getElementById('navToggle');
   var close = document.getElementById('navClose');
