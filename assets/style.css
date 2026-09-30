@@ -348,3 +348,142 @@ footer{background:var(--black);color:#aaa;padding:58px 0 28px;}
 
 /* Inline legacy colours are overridden so every page follows the new system */
 [style*="#F1ECE0"],[style*="#C9C2B4"],[style*="#B9B1A0"],[style*="#6F6858"]{color:inherit !important;}
+
+
+/* ============================================================
+   RED DOT LIVE VISUAL SYSTEM
+   Brighter signal red + motion + depth while staying static.
+   ============================================================ */
+:root{
+  --red:#FF1E2D;
+  --red-dark:#B9000B;
+  --hot-red:#FF3341;
+  --soft-red:#FFF0F2;
+  --off-white:#F5F7F9;
+  --line:#DDE1E5;
+}
+
+/* Make the brand red unmistakable */
+.brand-name .lockup .red,
+nav a.active,
+.kicker,
+.eyebrow,
+.svc-num,
+.svc-card:hover .svc-more,
+.svc-more:hover,
+.stat .num{color:var(--red);}
+.btn-primary,.nav-cta{background:var(--red);border-color:var(--red);}
+.btn-primary:hover,.nav-cta:hover{background:var(--black);border-color:var(--black);}
+
+/* Energetic signal strip */
+.hazard{
+  background:repeating-linear-gradient(
+    -45deg,
+    var(--red) 0 18px,
+    var(--red) 18px 34px,
+    var(--black) 34px 52px,
+    var(--black) 52px 68px
+  );
+  background-size:136px 136px;
+  animation:hazardShift 5s linear infinite;
+}
+.hazard.thin{background-size:96px 96px;}
+@keyframes hazardShift{to{background-position:136px 0;}}
+
+/* Header gets a little more presence */
+header{box-shadow:0 3px 18px rgba(0,0,0,.06);}
+.nav-cta{box-shadow:0 7px 20px rgba(255,30,45,.22);}
+.nav-cta:hover{box-shadow:none;}
+
+/* Hero motion */
+.hero::before{
+  border-color:rgba(255,30,45,.10);
+  animation:orbitGlow 9s ease-in-out infinite;
+}
+@keyframes orbitGlow{
+  0%,100%{transform:scale(1) rotate(0deg);}
+  50%{transform:scale(1.06) rotate(8deg);}
+}
+.hero-inner > div:first-child{animation:heroIn .75s ease both;}
+.flame-stage{animation:heroVisualIn .9s .12s ease both;}
+.flame-stage svg{
+  animation:flameFloat 4.5s ease-in-out infinite;
+  transform-origin:50% 55%;
+}
+.flame-stage::before{
+  background:radial-gradient(circle at 50% 42%,#262626 0%,#090909 68%);
+  box-shadow:0 25px 70px rgba(0,0,0,.18);
+}
+@keyframes heroIn{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
+@keyframes heroVisualIn{from{opacity:0;transform:translateX(24px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes flameFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-12px) rotate(1deg)}}
+
+/* Red Dot's inspection card feels active */
+.tag-card{border:1px solid #2a2a2a;box-shadow:0 24px 70px rgba(0,0,0,.18);}
+.tag-card::before{height:6px;background:linear-gradient(90deg,var(--red),var(--hot-red),var(--red));background-size:200% 100%;animation:redFlow 2.8s linear infinite;}
+@keyframes redFlow{to{background-position:200% 0}}
+.tag-status .pip{background:#35d477;box-shadow:0 0 0 0 rgba(53,212,119,.5);animation:statusPulse 1.8s infinite;}
+@keyframes statusPulse{70%{box-shadow:0 0 0 9px rgba(53,212,119,0)}100%{box-shadow:0 0 0 0 rgba(53,212,119,0)}}
+
+/* Cards feel clickable, not static */
+.svc-card{
+  overflow:hidden;
+  box-shadow:0 4px 0 rgba(0,0,0,.02);
+}
+.svc-card::after{
+  content:"";
+  position:absolute;
+  width:90px;height:90px;
+  right:-45px;bottom:-45px;
+  border-radius:50%;
+  background:var(--soft-red);
+  transition:transform .35s ease,background .35s ease;
+}
+.svc-card:hover::after{transform:scale(2.8);background:rgba(255,30,45,.07);}
+.svc-card:hover h3{color:var(--red);transition:color .2s ease;}
+.svc-icon{transition:transform .25s ease;}
+.svc-card:hover .svc-icon{transform:translateY(-4px) scale(1.06);}
+
+/* Page banners get a moving red signal */
+.page-banner::before{
+  content:"";
+  position:absolute;
+  left:-160px;top:0;
+  width:520px;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,30,45,.13),transparent);
+  transform:skewX(-18deg);
+  animation:bannerScan 7s ease-in-out infinite;
+}
+@keyframes bannerScan{0%,35%{left:-600px}65%,100%{left:110%}}
+
+/* Quote band becomes a brand statement */
+.quote-band{background:linear-gradient(120deg,var(--red) 0%,#E31321 55%,var(--red-dark) 100%);}
+.quote-band::after{border-color:rgba(255,255,255,.13);animation:quoteRing 8s ease-in-out infinite;}
+@keyframes quoteRing{50%{transform:scale(1.12) rotate(12deg)}}
+
+/* CTA has a subtle red energy wash */
+.cta{position:relative;overflow:hidden;}
+.cta::before{
+  content:"";position:absolute;width:360px;height:360px;
+  left:-220px;top:20px;border-radius:50%;
+  background:rgba(255,30,45,.06);
+}
+.cta-inner{position:relative;z-index:1;}
+
+/* Reveal cards with a tiny stagger */
+.svc-grid .svc-card:nth-child(1){transition-delay:.04s}
+.svc-grid .svc-card:nth-child(2){transition-delay:.10s}
+.svc-grid .svc-card:nth-child(3){transition-delay:.16s}
+
+/* Accessible motion fallback */
+@media(prefers-reduced-motion:reduce){
+  .hazard,.hero::before,.flame-stage svg,.tag-card::before,.tag-status .pip,.page-banner::before,.quote-band::after{animation:none;}
+  .hero-inner > div:first-child,.flame-stage{animation:none;}
+}
+
+/* Mobile keeps the same energy without excess movement */
+@media(max-width:640px){
+  .hero h1{font-size:clamp(48px,16vw,72px);}
+  .hero-inner{padding-top:58px;}
+  .hazard{height:7px;}
+}
